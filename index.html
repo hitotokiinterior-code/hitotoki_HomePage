@@ -119,6 +119,13 @@
     border-right:1px solid var(--line-soft); white-space:nowrap;
   }
   @keyframes scroll-left{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .ticker-single{
+    display:none; padding:16px 24px;
+    font-size:0.82rem; letter-spacing:0.05em; color:#cfc6b3;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    opacity:1; transition:opacity .35s ease;
+  }
+  .ticker-single.fade{opacity:0;}
 
   /* ---------- SECTION LABEL ---------- */
   .eyebrow{font-size:0.78rem; letter-spacing:0.16em; color:#a99f88; margin-bottom:6px;}
@@ -243,7 +250,8 @@
     .phones{gap:14px;}
     .phone{width:118px; height:242px;}
     .phone:nth-child(2){transform:translateY(-14px);}
-    .ticker-track{animation-duration:65s;}
+    .ticker-track{display:none;}
+    .ticker-single{display:block;}
   }
 </style>
 </head>
@@ -297,6 +305,7 @@
       <span>2026.11 HITOTOKI APP RELEASE.</span>
       <span>FOLLOW US ON INSTAGRAM.</span>
     </div>
+    <div class="ticker-single" id="tickerSingle"><span id="tickerSingleText"></span></div>
   </div>
 </div>
 
@@ -464,6 +473,27 @@
 </footer>
 
 <script>
+  // Mobile news ticker — show one item at a time, advancing every 3s
+  const newsItems = [
+    'NEW GAME CONNECT FOUR RELEASED.',
+    '2026.11 HITOTOKI APP RELEASE.',
+    'FOLLOW US ON INSTAGRAM.'
+  ];
+  const tickerSingle = document.getElementById('tickerSingle');
+  const tickerSingleText = document.getElementById('tickerSingleText');
+  let tickerIndex = 0;
+  if(tickerSingleText){
+    tickerSingleText.textContent = newsItems[0];
+    setInterval(()=>{
+      tickerSingle.classList.add('fade');
+      setTimeout(()=>{
+        tickerIndex = (tickerIndex + 1) % newsItems.length;
+        tickerSingleText.textContent = newsItems[tickerIndex];
+        tickerSingle.classList.remove('fade');
+      }, 350);
+    }, 3000);
+  }
+
   // Shogi board — 9x9 grid cells
   const shogi = document.getElementById('shogiBoard');
   for(let i=0;i<81;i++){ shogi.appendChild(document.createElement('div')); }
