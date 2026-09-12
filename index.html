@@ -22,7 +22,7 @@
     --line-soft: rgba(236,229,214,0.1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
+  html{scroll-behavior:smooth; overflow-x:hidden; width:100%; scroll-padding-top:84px;}
   body{
     background:var(--black);
     color:var(--ink);
@@ -259,7 +259,7 @@
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="nav-inner">
     <a href="#top" class="logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M12 3c-4 0-6.5 2.8-6.5 6.6 0 2.4 1 4 1 4l-2 2.4 2.6-.3s.4 2 2.4 3l-1 2 2-.8 1.5.8 1.5-.8 2 .8-1-2c2-1 2.4-3 2.4-3l2.6.3-2-2.4s1-1.6 1-4C18.5 5.8 16 3 12 3z"/><circle cx="9.3" cy="9" r="1"/><circle cx="14.7" cy="9" r="1"/></svg>
@@ -284,7 +284,7 @@
   </div>
 </header>
 
-<section class="hero" id="top">
+<section class="hero">
   <div class="hero-inner">
     <h1>hitotoki</h1>
     <p class="hero-jp">人と人の、隙間時間を楽しむ。</p>
@@ -475,7 +475,11 @@
 </footer>
 
 <script>
-  // Mobile news ticker — show one item at a time, advancing every 3s
+  // Ensure the page always starts at the very top (avoids landing mid-hero on load)
+  if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+  window.addEventListener('load', ()=>{ window.scrollTo(0,0); });
+
+  // News ticker — show one item at a time, advancing every 4s
   const newsItems = [
     'NEW GAME CONNECT FOUR RELEASED.',
     '2026.11 HITOTOKI APP RELEASE.',
