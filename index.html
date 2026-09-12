@@ -113,7 +113,7 @@
     background:var(--amber);
   }
   .ticker-viewport{overflow:hidden; flex:1; white-space:nowrap;}
-  .ticker-track{display:inline-flex; animation:scroll-left 32s linear infinite;}
+  .ticker-track{display:inline-flex; animation:scroll-left 32s linear infinite; animation-play-state:paused;}
   .ticker-track span{
     padding:16px 40px; font-size:0.82rem; letter-spacing:0.05em; color:#cfc6b3;
     border-right:1px solid var(--line-soft); white-space:nowrap;
@@ -481,17 +481,21 @@
   ];
   const tickerSingle = document.getElementById('tickerSingle');
   const tickerSingleText = document.getElementById('tickerSingleText');
-  let tickerIndex = 0;
   if(tickerSingleText){
     tickerSingleText.textContent = newsItems[0];
-    setInterval(()=>{
-      tickerSingle.classList.add('fade');
-      setTimeout(()=>{
-        tickerIndex = (tickerIndex + 1) % newsItems.length;
-        tickerSingleText.textContent = newsItems[tickerIndex];
-        tickerSingle.classList.remove('fade');
-      }, 350);
-    }, 3000);
+    // auto-rotation paused — remove the comment below and set autoRotate=true to resume
+    const autoRotate = false;
+    if(autoRotate){
+      let tickerIndex = 0;
+      setInterval(()=>{
+        tickerSingle.classList.add('fade');
+        setTimeout(()=>{
+          tickerIndex = (tickerIndex + 1) % newsItems.length;
+          tickerSingleText.textContent = newsItems[tickerIndex];
+          tickerSingle.classList.remove('fade');
+        }, 350);
+      }, 3000);
+    }
   }
 
   // Shogi board — 9x9 grid cells
